@@ -11,6 +11,8 @@ public class UserEntity {
     private String username;
     private String email;
 
+    private int permission;
+
     public void setUsername(String username) {
         this.username = username;
     }
