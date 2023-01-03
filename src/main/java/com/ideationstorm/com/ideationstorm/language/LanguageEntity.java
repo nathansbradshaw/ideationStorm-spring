@@ -8,7 +8,6 @@ import jakarta.persistence.*;
 public class LanguageEntity {
     @Id
     @GeneratedValue
-    @ManyToOne
     private long id;
 
     private String name;
