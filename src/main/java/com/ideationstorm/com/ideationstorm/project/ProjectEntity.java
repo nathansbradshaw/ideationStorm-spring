@@ -1,5 +1,8 @@
 package com.ideationstorm.com.ideationstorm.project;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ideationstorm.com.ideationstorm.language.LanguageEntity;
 import com.ideationstorm.com.ideationstorm.user.UserEntity;
 import jakarta.persistence.*;
@@ -15,6 +18,7 @@ public class ProjectEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private UserEntity user;
 
     private String title;
@@ -23,6 +27,7 @@ public class ProjectEntity {
     private int difficulty;
     private int score;
 
+    @JsonIgnoreProperties({"languages", "projects"})
     @ManyToMany
     @JoinTable(
             name = "project_languages",
@@ -55,4 +60,51 @@ public class ProjectEntity {
     }
 
 
+    public long getId() {
+        return id;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public Set<LanguageEntity> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(Set<LanguageEntity> languages) {
+        this.languages = languages;
+    }
 }

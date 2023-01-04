@@ -26,8 +26,8 @@ CREATE TABLE projects (
 
 CREATE TABLE project_languages (
   id BIGINT NOT NULL AUTO_INCREMENT,
-  language_id BIGINT NULL,
-  project_id BIGINT null,
+  language_id BIGINT NOT NULL,
+  project_id BIGINT NOT NULL,
   CONSTRAINT fk_project_languages_on_languages FOREIGN KEY (language_id) REFERENCES languages (id),
   CONSTRAINT fk_project_languages_on_projects FOREIGN KEY (project_id) REFERENCES projects (id),
   CONSTRAINT pk_project_languages PRIMARY KEY (id)

@@ -1,5 +1,6 @@
 package com.ideationstorm.com.ideationstorm.user;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ideationstorm.com.ideationstorm.language.LanguageEntity;
 import com.ideationstorm.com.ideationstorm.project.ProjectEntity;
 import jakarta.persistence.*;
@@ -19,6 +20,7 @@ public class UserEntity {
 
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private Set<ProjectEntity> project;
     public void setUsername(String username) {
         this.username = username;
@@ -50,6 +52,14 @@ public class UserEntity {
 
     public void setPermission(int permission) {
         this.permission = permission;
+    }
+
+    public Set<ProjectEntity> getProject() {
+        return project;
+    }
+
+    public void setProject(Set<ProjectEntity> project) {
+        this.project = project;
     }
 
 //    @Override
