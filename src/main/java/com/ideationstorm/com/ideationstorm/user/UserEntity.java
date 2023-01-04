@@ -1,6 +1,10 @@
 package com.ideationstorm.com.ideationstorm.user;
 
+import com.ideationstorm.com.ideationstorm.language.LanguageEntity;
+import com.ideationstorm.com.ideationstorm.project.ProjectEntity;
 import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -13,6 +17,9 @@ public class UserEntity {
 
     private int permission;
 
+
+    @OneToMany(mappedBy = "user")
+    private Set<ProjectEntity> project;
     public void setUsername(String username) {
         this.username = username;
     }

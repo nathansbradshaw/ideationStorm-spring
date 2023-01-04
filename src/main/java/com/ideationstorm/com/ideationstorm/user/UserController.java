@@ -20,12 +20,11 @@ public class UserController {
 
     @GetMapping("/users")
     public @ResponseBody List<UserEntity> getAllUsers(){
-        List<UserEntity> bob = userRepository.findAll();
-        System.out.println(bob);
         return userRepository.findAll();
     }
     @GetMapping("/users/user")
-    public String getUserByUsername(@RequestParam String username) {
+    public String getUserByUsername(@RequestParam String username, @RequestParam(required = false) int id) {
+        System.out.println(id);
         UserEntity user = userRepository.findByUsername(username);
 
         return  user.toString();
