@@ -9,13 +9,15 @@ CREATE TABLE users (
 CREATE TABLE languages (
   id BIGINT NOT NULL AUTO_INCREMENT,
    name VARCHAR(255) NULL,
-   CONSTRAINT pk_languages PRIMARY KEY (id)
+   CONSTRAINT pk_languages PRIMARY KEY (id),
+   CONSTRAINT uc_languages_name UNIQUE (name)
 );
 
 CREATE TABLE categories (
   id BIGINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NULL,
-    CONSTRAINT pk_categories PRIMARY KEY (id)
+    CONSTRAINT pk_categories PRIMARY KEY (id),
+    CONSTRAINT uc_categories_name UNIQUE (name)
 );
 
 CREATE TABLE projects (

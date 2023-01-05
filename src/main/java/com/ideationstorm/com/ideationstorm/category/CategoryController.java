@@ -1,11 +1,13 @@
 package com.ideationstorm.com.ideationstorm.category;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CategoryController {
@@ -17,7 +19,25 @@ public class CategoryController {
     }
 
     @GetMapping("category")
-    public  @ResponseBody List<CategoryEntity> getAllCategories() {
+    public  @ResponseBody Iterable<CategoryEntity> getAllCategories() {
         return categoryRepository.findAll();
     }
+
+    @GetMapping("category/{id}")
+    public @ResponseBody CategoryEntity getCategoryByName(@PathVariable("id") Long id) {
+        return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
+    }
+
+    @PostMapping("category")
+    public  ResponseEntity<CategoryEntity> createCategory(@RequestBody String name){
+        try {
+            CategoryEntity _category = categoryRepository.save(new CategoryEntity(name));
+            return new ResponseEntity<>(_category, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+
 }

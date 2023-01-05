@@ -10,14 +10,21 @@ import java.util.Set;
 @Table(name = "categories")
 public class CategoryEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    @Column(unique = true)
     private String name;
 
     @JsonIgnoreProperties({"projects", "categories" })
     @ManyToMany(mappedBy = "categories")
     private Set<ProjectEntity> projects;
+
+    public CategoryEntity() {
+    }
+
+    public CategoryEntity(String name) {
+        this.name = name;
+    }
 
     public long getId() {
         return id;

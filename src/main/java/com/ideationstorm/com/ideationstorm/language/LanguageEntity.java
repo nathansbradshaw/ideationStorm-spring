@@ -13,9 +13,9 @@ import java.util.Set;
 @Table(name="languages")
 public class LanguageEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    @Column(unique = true)
     private String name;
 
     @JsonIgnoreProperties({"languages", "projects"})
@@ -40,7 +40,7 @@ public class LanguageEntity {
 
     public Set<ProjectEntity> getProjects() {
         return projects;
-    }
+    } 
 
     public void setProjects(Set<ProjectEntity> projects) {
         this.projects = projects;

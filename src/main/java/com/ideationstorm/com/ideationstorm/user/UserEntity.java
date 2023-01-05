@@ -27,10 +27,11 @@ public class UserEntity {
     @JsonManagedReference
     private Set<ProjectEntity> project;
 
+    @Column(unique = true)
     public void setUsername(String username) {
         this.username = username;
     }
-
+    @Column(unique = true)
     public void setEmail(String email){
         this.email = email;
     }
