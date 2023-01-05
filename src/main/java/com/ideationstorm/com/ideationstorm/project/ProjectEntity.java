@@ -3,10 +3,13 @@ package com.ideationstorm.com.ideationstorm.project;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.ideationstorm.com.ideationstorm.category.CategoryEntity;
 import com.ideationstorm.com.ideationstorm.language.LanguageEntity;
 import com.ideationstorm.com.ideationstorm.user.UserEntity;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -26,6 +29,11 @@ public class ProjectEntity {
     private String content;
     private int difficulty;
     private int score;
+    @Column(name="created_datetime")
+    @CreationTimestamp
+    private LocalDateTime createdDatetime;
+    @Column(name="updated_datetime")
+    private LocalDateTime updatedDatetime;
 
     @JsonIgnoreProperties({"languages", "projects"})
     @ManyToMany
@@ -35,6 +43,15 @@ public class ProjectEntity {
             inverseJoinColumns = @JoinColumn(name = "language_id")
     )
     private Set<LanguageEntity> languages;
+
+    @JsonIgnoreProperties({"projects", "categories" })
+    @ManyToMany
+    @JoinTable(
+            name = "project_categories",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<CategoryEntity> categories;
 
     public void setId(long id) {
         this.id = id;
@@ -106,5 +123,13 @@ public class ProjectEntity {
 
     public void setLanguages(Set<LanguageEntity> languages) {
         this.languages = languages;
+    }
+
+    public Set<CategoryEntity> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<CategoryEntity> categories) {
+        this.categories = categories;
     }
 }

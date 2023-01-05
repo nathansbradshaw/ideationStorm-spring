@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ideationstorm.com.ideationstorm.language.LanguageEntity;
 import com.ideationstorm.com.ideationstorm.project.ProjectEntity;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -15,13 +17,16 @@ public class UserEntity {
     private long id;
     private String username;
     private String email;
-
     private int permission;
-
-
+    @Column(name="created_datetime")
+    @CreationTimestamp
+    private LocalDateTime createdDatetime;
+    @Column(name="updated_datetime")
+    private LocalDateTime updatedDatetime;
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private Set<ProjectEntity> project;
+
     public void setUsername(String username) {
         this.username = username;
     }
