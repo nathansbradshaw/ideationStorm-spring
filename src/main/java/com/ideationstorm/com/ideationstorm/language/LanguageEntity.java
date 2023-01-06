@@ -22,6 +22,13 @@ public class LanguageEntity {
     @ManyToMany(mappedBy = "languages")
     private Set<ProjectEntity> projects;
 
+    public LanguageEntity() {
+    }
+
+    public LanguageEntity(String name) {
+        this.name = name;
+    }
+
     public long getId() {
         return id;
     }
@@ -40,7 +47,7 @@ public class LanguageEntity {
 
     public Set<ProjectEntity> getProjects() {
         return projects;
-    } 
+    }
 
     public void setProjects(Set<ProjectEntity> projects) {
         this.projects = projects;
