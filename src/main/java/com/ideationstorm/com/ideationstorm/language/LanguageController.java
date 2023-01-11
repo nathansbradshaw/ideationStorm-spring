@@ -21,7 +21,7 @@ public class LanguageController {
         return languageRepository.findAll();
     }
 
-    @PostMapping("language")
+    @PostMapping("languages/create")
     public ResponseEntity<LanguageEntity> createLanguage(@RequestBody String name){
         try {
             LanguageEntity _language = languageRepository.save(new LanguageEntity(name  ));
