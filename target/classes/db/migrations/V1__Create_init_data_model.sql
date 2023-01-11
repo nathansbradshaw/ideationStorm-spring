@@ -3,7 +3,12 @@ CREATE TABLE users (
    username VARCHAR(255) NULL,
    email VARCHAR(255) NULL,
    permission INT NOT NULL,
-   CONSTRAINT pk_users PRIMARY KEY (id)
+   role VARCHAR(255) NOT NULL DEFAULT "USER",
+   created_datetime DATE NOT NULL DEFAULT (CURRENT_DATE),
+   updated_datetime DATE NOT NULL DEFAULT (CURRENT_DATE),
+   CONSTRAINT pk_users PRIMARY KEY (id),
+   CONSTRAINT uc_users_username UNIQUE (username),
+   CONSTRAINT uc_users_email UNIQUE (email)
 );
 
 CREATE TABLE languages (

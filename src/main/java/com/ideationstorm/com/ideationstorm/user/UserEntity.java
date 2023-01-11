@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +30,10 @@ public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(unique = true)
     private String username;
+    @Column(unique = true)
+
     private String email;
 
     private String password;
@@ -42,6 +46,7 @@ public class UserEntity implements UserDetails {
     @CreationTimestamp
     private LocalDateTime createdDatetime;
     @Column(name="updated_datetime")
+    @UpdateTimestamp
     private LocalDateTime updatedDatetime;
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
