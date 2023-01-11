@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/v1/categories")
 public class CategoryController {
     CategoryRepository categoryRepository;
 
@@ -18,21 +19,21 @@ public class CategoryController {
         this.categoryRepository = categoryRepository;
     }
 
-    @GetMapping("category")
+    @GetMapping()
     public  @ResponseBody Iterable<CategoryEntity> getAllCategories() {
         return categoryRepository.findAll();
     }
 
-    @GetMapping("category/{id}")
+    @GetMapping("/{id}")
     public @ResponseBody CategoryEntity getCategoryByName(@PathVariable("id") Long id) {
         return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
     }
 
-    @PostMapping("category")
+    @PostMapping("/api/v1/category")
     public  ResponseEntity<CategoryEntity> createCategory(@RequestBody String name){
         try {
-            CategoryEntity _category = categoryRepository.save(new CategoryEntity(name));
-            return new ResponseEntity<>(_category, HttpStatus.CREATED);
+            CategoryEntity category = categoryRepository.save(new CategoryEntity(name));
+            return new ResponseEntity<>(category, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
