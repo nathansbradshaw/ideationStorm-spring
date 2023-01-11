@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("categories")
+@RequestMapping("/api/v1/categories")
 public class CategoryController {
     CategoryRepository categoryRepository;
 
@@ -29,7 +29,7 @@ public class CategoryController {
         return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
     }
 
-    @PostMapping("category")
+    @PostMapping("/api/v1/category")
     public  ResponseEntity<CategoryEntity> createCategory(@RequestBody String name){
         try {
             CategoryEntity category = categoryRepository.save(new CategoryEntity(name));
