@@ -6,6 +6,7 @@ import com.ideationstorm.com.ideationstorm.category.Category;
 import com.ideationstorm.com.ideationstorm.language.Language;
 import com.ideationstorm.com.ideationstorm.user.User;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -51,6 +52,16 @@ public class Project {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<Category> categories;
+
+    public ProjectEntity(ProjectEntity project) {
+        this.title = project.title;
+        this.languages = project.languages;
+        this.categories = project.categories;
+        this.content = project.content;
+        this.description = project.description;
+        this.user = project.user;
+        this.difficulty = project.difficulty;
+    }
 
     public void setId(long id) {
         this.id = id;

@@ -3,6 +3,7 @@ package com.ideationstorm.com.ideationstorm.category;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ideationstorm.com.ideationstorm.project.Project;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 import java.util.Set;
 

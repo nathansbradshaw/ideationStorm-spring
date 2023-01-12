@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("languages")
 public class LanguageController {
     LanguageRepository languageRepository;
 
@@ -16,13 +17,13 @@ public class LanguageController {
         this.languageRepository = languageRepository;
     }
 
-    @GetMapping("languages")
-    public @ResponseBody List<Language> getAllLanguages() {
+    @GetMapping()
+    public @ResponseBody List<LanguageEntity> getAllLanguages() {
         return languageRepository.findAll();
     }
 
-    @PostMapping("languages/create")
-    public ResponseEntity<Language> createLanguage(@RequestBody String name){
+    @PostMapping("/create")
+    public ResponseEntity<LanguageEntity> createLanguage(@RequestBody String name){
         try {
             Language _language = languageRepository.save(new Language(name  ));
             return new ResponseEntity<>(_language, HttpStatus.CREATED);

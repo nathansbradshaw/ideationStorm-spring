@@ -1,5 +1,5 @@
-INSERT INTO users(id, username, email, permission) VALUES(1, 'boberto', 'bob@exmaple.com', 0);
-INSERT INTO users(id, username, email, permission) VALUES(2, 'Jason', 'json@exmaple.com', 1);
+INSERT INTO users(id, username, email, role) VALUES(1, 'boberto', 'bob@exmaple.com', "ADMIN");
+INSERT INTO users(id, username, email, role) VALUES(2, 'Jason', 'json@exmaple.com', "USER");
 
 INSERT INTO languages (id, name) VALUES (1, 'Rust');
 INSERT INTO languages (id, name) VALUES (2, 'Kotlin');
