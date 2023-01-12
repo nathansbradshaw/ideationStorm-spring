@@ -2,16 +2,13 @@ package com.ideationstorm.com.ideationstorm.auth;
 
 import com.ideationstorm.com.ideationstorm.config.JwtService;
 import com.ideationstorm.com.ideationstorm.user.Role;
-import com.ideationstorm.com.ideationstorm.user.UserEntity;
+import com.ideationstorm.com.ideationstorm.user.User;
 import com.ideationstorm.com.ideationstorm.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +20,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     public AuthenticationResponse register(RegisterRequest request) {
-        var user = UserEntity.builder()
+        var user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))

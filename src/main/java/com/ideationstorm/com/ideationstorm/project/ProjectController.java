@@ -18,7 +18,7 @@ public class ProjectController {
     }
 
     @GetMapping()
-    public @ResponseBody List<ProjectEntity> getAllProjects(){
+    public @ResponseBody List<Project> getAllProjects(){
         return projectRepository.findAll();
     }
 

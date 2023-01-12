@@ -1,8 +1,7 @@
 package com.ideationstorm.com.ideationstorm.user;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ideationstorm.com.ideationstorm.language.LanguageEntity;
-import com.ideationstorm.com.ideationstorm.project.ProjectEntity;
+import com.ideationstorm.com.ideationstorm.project.Project;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +25,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class UserEntity implements UserDetails {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -50,7 +49,7 @@ public class UserEntity implements UserDetails {
     private LocalDateTime updatedDatetime;
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    private Set<ProjectEntity> project;
+    private Set<Project> project;
 
     @Column(unique = true)
     public void setUsername(String username) {
@@ -117,11 +116,11 @@ public class UserEntity implements UserDetails {
         this.permission = permission;
     }
 
-    public Set<ProjectEntity> getProject() {
+    public Set<Project> getProject() {
         return project;
     }
 
-    public void setProject(Set<ProjectEntity> project) {
+    public void setProject(Set<Project> project) {
         this.project = project;
     }
 

@@ -17,14 +17,14 @@ public class LanguageController {
     }
 
     @GetMapping("languages")
-    public @ResponseBody List<LanguageEntity> getAllLanguages() {
+    public @ResponseBody List<Language> getAllLanguages() {
         return languageRepository.findAll();
     }
 
     @PostMapping("languages/create")
-    public ResponseEntity<LanguageEntity> createLanguage(@RequestBody String name){
+    public ResponseEntity<Language> createLanguage(@RequestBody String name){
         try {
-            LanguageEntity _language = languageRepository.save(new LanguageEntity(name  ));
+            Language _language = languageRepository.save(new Language(name  ));
             return new ResponseEntity<>(_language, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
