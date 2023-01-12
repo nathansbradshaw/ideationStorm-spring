@@ -115,9 +115,9 @@ public class User implements UserDetails {
         this.project = project;
     }
 
-//    @Override
-//    public String toString() {
-//        return String.format("User{id=%d, username=%s, email=%s}", id, username,email);
-//    }
+    @Override
+    public String toString() {
+        return String.format("User{id=%d, username=%s, email=%s}", id, username,email);
+    }
 
 }

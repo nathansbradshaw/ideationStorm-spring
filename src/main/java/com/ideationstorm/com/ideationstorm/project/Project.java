@@ -6,17 +6,25 @@ import com.ideationstorm.com.ideationstorm.category.Category;
 import com.ideationstorm.com.ideationstorm.language.Language;
 import com.ideationstorm.com.ideationstorm.user.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
+@Data
+@Builder
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "projects", schema = "IDEATION_STORM")
 public class Project {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
@@ -53,16 +61,6 @@ public class Project {
     )
     private Set<Category> categories;
 
-    public Project(Project project) {
-        this.title = project.title;
-        this.languages = project.languages;
-        this.categories = project.categories;
-        this.content = project.content;
-        this.description = project.description;
-        this.user = project.user;
-        this.difficulty = project.difficulty;
-    }
-
     public void setId(long id) {
         this.id = id;
     }
@@ -78,8 +76,6 @@ public class Project {
     public void setContent(String content) {
         this.content = content;
     }
-
-    public Project() {}
 
     public Project(String title, String description) {
         this.setTitle(title);
