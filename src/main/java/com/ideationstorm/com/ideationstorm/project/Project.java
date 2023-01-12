@@ -53,7 +53,7 @@ public class Project {
     )
     private Set<Category> categories;
 
-    public ProjectEntity(ProjectEntity project) {
+    public Project(Project project) {
         this.title = project.title;
         this.languages = project.languages;
         this.categories = project.categories;

@@ -22,9 +22,9 @@ public class ProjectController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<ProjectEntity> createProject(@RequestBody ProjectEntity project){
+    public ResponseEntity<Project> createProject(@RequestBody Project project){
         try {
-            ProjectEntity _project = projectRepository.save(new ProjectEntity(project));
+            Project _project = projectRepository.save(new Project(project));
             return new ResponseEntity<>(_project, HttpStatus.CREATED);
         } catch (Exception e) {
             return  new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -32,7 +32,7 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProject(@RequestBody ProjectEntity project, @PathVariable("id") long id){
+    public ResponseEntity<?> updateProject(@RequestBody Project project, @PathVariable("id") long id){
         try {
             projectRepository.save(project, id);
             return ResponseEntity.ok("Resource Saved");

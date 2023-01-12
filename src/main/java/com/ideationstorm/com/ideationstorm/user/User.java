@@ -107,7 +107,7 @@ public class User implements UserDetails {
         return email;
     }
 
-    public Set<ProjectEntity> getProject() {
+    public Set<Project> getProject() {
         return project;
     }
 

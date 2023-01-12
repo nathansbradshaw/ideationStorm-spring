@@ -41,9 +41,9 @@ public class CategoryController {
 
     @PostMapping("/{id}/delete")
     @RolesAllowed("ADMIN")
-    public ResponseEntity<CategoryEntity> deleteCategory(@PathVariable("id") Long id){
+    public ResponseEntity<Category> deleteCategory(@PathVariable("id") Long id){
         try {
-            CategoryEntity categoryToDelete = categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
+            Category categoryToDelete = categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
             categoryRepository.delete(categoryToDelete);
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         } catch (Exception e) {

@@ -18,12 +18,12 @@ public class LanguageController {
     }
 
     @GetMapping()
-    public @ResponseBody List<LanguageEntity> getAllLanguages() {
+    public @ResponseBody List<Language> getAllLanguages() {
         return languageRepository.findAll();
     }
 
     @PostMapping("/create")
-    public ResponseEntity<LanguageEntity> createLanguage(@RequestBody String name){
+    public ResponseEntity<Language> createLanguage(@RequestBody String name){
         try {
             Language _language = languageRepository.save(new Language(name  ));
             return new ResponseEntity<>(_language, HttpStatus.CREATED);
