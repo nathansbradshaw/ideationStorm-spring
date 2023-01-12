@@ -4,10 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/categories")
@@ -20,19 +16,19 @@ public class CategoryController {
     }
 
     @GetMapping()
-    public  @ResponseBody Iterable<CategoryEntity> getAllCategories() {
+    public  @ResponseBody Iterable<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public @ResponseBody CategoryEntity getCategoryByName(@PathVariable("id") Long id) {
+    public @ResponseBody Category getCategoryByName(@PathVariable("id") Long id) {
         return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
     }
 
     @PostMapping("/create")
-    public  ResponseEntity<CategoryEntity> createCategory(@RequestBody String name){
+    public  ResponseEntity<Category> createCategory(@RequestBody String name){
         try {
-            CategoryEntity category = categoryRepository.save(new CategoryEntity(name));
+            Category category = categoryRepository.save(new Category(name));
             return new ResponseEntity<>(category, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

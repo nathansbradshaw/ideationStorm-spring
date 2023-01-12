@@ -1,31 +1,28 @@
-package com.ideationstorm.com.ideationstorm.language;
+package com.ideationstorm.com.ideationstorm.category;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ideationstorm.com.ideationstorm.project.ProjectEntity;
+import com.ideationstorm.com.ideationstorm.project.Project;
 import jakarta.persistence.*;
 
 import java.util.Set;
 
-
 @Entity
-@Table(name="languages")
-public class LanguageEntity {
+@Table(name = "categories")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(unique = true)
     private String name;
 
-    @JsonIgnoreProperties({"languages", "projects"})
-    @ManyToMany(mappedBy = "languages")
-    private Set<ProjectEntity> projects;
+    @JsonIgnoreProperties({"projects", "categories" })
+    @ManyToMany(mappedBy = "categories")
+    private Set<Project> projects;
 
-    public LanguageEntity() {
+    public Category() {
     }
 
-    public LanguageEntity(String name) {
+    public Category(String name) {
         this.name = name;
     }
 
@@ -45,11 +42,11 @@ public class LanguageEntity {
         this.name = name;
     }
 
-    public Set<ProjectEntity> getProjects() {
+    public Set<Project> getProjects() {
         return projects;
     }
 
-    public void setProjects(Set<ProjectEntity> projects) {
+    public void setProjects(Set<Project> projects) {
         this.projects = projects;
     }
 }

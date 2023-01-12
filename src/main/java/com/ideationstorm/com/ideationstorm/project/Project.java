@@ -2,10 +2,9 @@ package com.ideationstorm.com.ideationstorm.project;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ideationstorm.com.ideationstorm.category.CategoryEntity;
-import com.ideationstorm.com.ideationstorm.language.LanguageEntity;
-import com.ideationstorm.com.ideationstorm.user.UserEntity;
+import com.ideationstorm.com.ideationstorm.category.Category;
+import com.ideationstorm.com.ideationstorm.language.Language;
+import com.ideationstorm.com.ideationstorm.user.User;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -14,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "projects", schema = "IDEATION_STORM")
-public class ProjectEntity {
+public class Project {
     @Id
     @GeneratedValue
     private long id;
@@ -22,7 +21,7 @@ public class ProjectEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
-    private UserEntity user;
+    private User user;
 
     private String title;
     private String description;
@@ -42,7 +41,7 @@ public class ProjectEntity {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "language_id")
     )
-    private Set<LanguageEntity> languages;
+    private Set<Language> languages;
 
     @JsonIgnoreProperties({"projects", "categories" })
     @ManyToMany
@@ -51,7 +50,7 @@ public class ProjectEntity {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private Set<CategoryEntity> categories;
+    private Set<Category> categories;
 
     public void setId(long id) {
         this.id = id;
@@ -69,9 +68,9 @@ public class ProjectEntity {
         this.content = content;
     }
 
-    public ProjectEntity() {}
+    public Project() {}
 
-    public ProjectEntity(String title, String description) {
+    public Project(String title, String description) {
         this.setTitle(title);
         this.setDescription(description);
     }
@@ -81,11 +80,11 @@ public class ProjectEntity {
         return id;
     }
 
-    public UserEntity getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(UserEntity user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -117,19 +116,19 @@ public class ProjectEntity {
         this.score = score;
     }
 
-    public Set<LanguageEntity> getLanguages() {
+    public Set<Language> getLanguages() {
         return languages;
     }
 
-    public void setLanguages(Set<LanguageEntity> languages) {
+    public void setLanguages(Set<Language> languages) {
         this.languages = languages;
     }
 
-    public Set<CategoryEntity> getCategories() {
+    public Set<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<CategoryEntity> categories) {
+    public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
 }

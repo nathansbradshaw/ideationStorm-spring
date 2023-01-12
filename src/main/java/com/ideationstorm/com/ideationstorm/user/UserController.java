@@ -19,13 +19,13 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public @ResponseBody List<UserEntity> getAllUsers(){
+    public @ResponseBody List<User> getAllUsers(){
         return userRepository.findAll();
     }
     @GetMapping("/users/user")
     public String getUserByUsername(@RequestParam String username, @RequestParam(required = false) int id) {
         System.out.println(id);
-        UserEntity user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username);
 
         return  user.toString();
     }
