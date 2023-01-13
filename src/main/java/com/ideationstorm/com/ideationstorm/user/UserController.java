@@ -22,7 +22,7 @@ public class UserController {
     public @ResponseBody List<User> getAllUsers(){
         return userRepository.findAll();
     }
-    @GetMapping("/users/user")
+    @GetMapping("/users/user/{id}")
     public String getUserByUsername(@RequestParam String username, @RequestParam(required = false) int id) {
         System.out.println(id);
         User user = userRepository.findByUsername(username);
