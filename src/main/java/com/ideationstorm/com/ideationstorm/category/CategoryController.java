@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
     CategoryRepository categoryRepository;
 
+    private final CategoryService categoryService;
+
     @Autowired
-    public CategoryController(CategoryRepository categoryRepository) {
+    public CategoryController(CategoryRepository categoryRepository, CategoryService categoryService) {
         this.categoryRepository = categoryRepository;
+        this.categoryService = categoryService;
     }
 
     @GetMapping()
@@ -37,6 +40,12 @@ public class CategoryController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    @PutMapping("/update")
+    @RolesAllowed("ADMIN")
+    public ResponseEntity<Category> updateCategory(@RequestBody CategoryUpdateRequest categoryUpdateRequest){
+        return ResponseEntity.ok( categoryService.updateCategory(categoryUpdateRequest));
     }
 
     @PostMapping("/{id}/delete")

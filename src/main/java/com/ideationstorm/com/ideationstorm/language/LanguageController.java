@@ -11,10 +11,12 @@ import java.util.List;
 @RequestMapping("languages")
 public class LanguageController {
     LanguageRepository languageRepository;
+    private final LanguageService languageService;
 
     @Autowired
-    public LanguageController(LanguageRepository languageRepository){
+    public LanguageController(LanguageRepository languageRepository, LanguageService languageService){
         this.languageRepository = languageRepository;
+        this.languageService = languageService;
     }
 
     @GetMapping()
@@ -30,6 +32,11 @@ public class LanguageController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PutMapping("/update")
+    public  ResponseEntity<Language> updateLanguage(@RequestBody LanguageUpdateRequest languageUpdateRequest) {
+        return ResponseEntity.ok(languageService.updateLanguage(languageUpdateRequest));
     }
 
 }

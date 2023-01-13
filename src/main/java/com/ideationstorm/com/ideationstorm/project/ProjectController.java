@@ -10,15 +10,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("projects")
 public class ProjectController {
     private final ProjectService projectService;
+    private final ProjectRepository projectRepository;
 
     @Autowired
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectService projectService,
+                             ProjectRepository projectRepository) {
         this.projectService = projectService;
+        this.projectRepository = projectRepository;
     }
 
     @GetMapping()
@@ -32,6 +36,16 @@ public class ProjectController {
                                                  Authentication authentication){
         User user = (User) authentication.getPrincipal();
         return ResponseEntity.ok((projectService.createProject(project, user)));
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<Project> updateProject(@RequestBody ProjectUpdateRequest request, @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        Optional<Project> project = projectRepository.findById(request.getId());
+        if(project.get().getUser() != user){
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+        return ResponseEntity.ok(projectService.updateProject(request));
     }
 
 }

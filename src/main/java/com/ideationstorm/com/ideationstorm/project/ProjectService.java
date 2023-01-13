@@ -30,4 +30,15 @@ public class ProjectService {
         return project;
     }
 
+    public Project updateProject(ProjectUpdateRequest request){
+        return projectRepository.save(Project.builder()
+                .title(request.getTitle())
+                .id(request.getId())
+                .categories(request.getCategories())
+                .content(request.getContent())
+                .difficulty(request.getDifficulty())
+                .languages(request.getLanguages())
+                .build());
+    }
+
 }
