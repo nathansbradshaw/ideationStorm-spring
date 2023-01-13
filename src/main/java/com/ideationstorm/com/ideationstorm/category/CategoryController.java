@@ -1,8 +1,11 @@
 package com.ideationstorm.com.ideationstorm.category;
 
+import com.ideationstorm.com.ideationstorm.user.Role;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -10,9 +13,12 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
     CategoryRepository categoryRepository;
 
+    private final CategoryService categoryService;
+
     @Autowired
-    public CategoryController(CategoryRepository categoryRepository) {
+    public CategoryController(CategoryRepository categoryRepository, CategoryService categoryService) {
         this.categoryRepository = categoryRepository;
+        this.categoryService = categoryService;
     }
 
     @GetMapping()
@@ -34,6 +40,24 @@ public class CategoryController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    @PutMapping("/update")
+    @RolesAllowed("ADMIN")
+    public ResponseEntity<Category> updateCategory(@RequestBody CategoryUpdateRequest categoryUpdateRequest){
+        return ResponseEntity.ok( categoryService.updateCategory(categoryUpdateRequest));
+    }
+
+    @PostMapping("/{id}/delete")
+    @RolesAllowed("ADMIN")
+    public ResponseEntity<Category> deleteCategory(@PathVariable("id") Long id){
+        try {
+            Category categoryToDelete = categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
+            categoryRepository.delete(categoryToDelete);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 

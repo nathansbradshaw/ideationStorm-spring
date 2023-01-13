@@ -8,20 +8,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("languages")
 public class LanguageController {
     LanguageRepository languageRepository;
+    private final LanguageService languageService;
 
     @Autowired
-    public LanguageController(LanguageRepository languageRepository){
+    public LanguageController(LanguageRepository languageRepository, LanguageService languageService){
         this.languageRepository = languageRepository;
+        this.languageService = languageService;
     }
 
-    @GetMapping("languages")
+    @GetMapping()
     public @ResponseBody List<Language> getAllLanguages() {
         return languageRepository.findAll();
     }
 
-    @PostMapping("languages/create")
+    @PostMapping("/create")
     public ResponseEntity<Language> createLanguage(@RequestBody String name){
         try {
             Language _language = languageRepository.save(new Language(name  ));
@@ -29,6 +32,11 @@ public class LanguageController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PutMapping("/update")
+    public  ResponseEntity<Language> updateLanguage(@RequestBody LanguageUpdateRequest languageUpdateRequest) {
+        return ResponseEntity.ok(languageService.updateLanguage(languageUpdateRequest));
     }
 
 }

@@ -36,8 +36,7 @@ public class User implements UserDetails {
     private String email;
 
     private String password;
-
-    private int permission;
+    
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -108,14 +107,6 @@ public class User implements UserDetails {
         return email;
     }
 
-    public int getPermission() {
-        return permission;
-    }
-
-    public void setPermission(int permission) {
-        this.permission = permission;
-    }
-
     public Set<Project> getProject() {
         return project;
     }
@@ -124,9 +115,9 @@ public class User implements UserDetails {
         this.project = project;
     }
 
-//    @Override
-//    public String toString() {
-//        return String.format("User{id=%d, username=%s, email=%s}", id, username,email);
-//    }
+    @Override
+    public String toString() {
+        return String.format("User{id=%d, username=%s, email=%s}", id, username,email);
+    }
 
 }

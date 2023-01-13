@@ -2,7 +2,6 @@ CREATE TABLE users (
   id BIGINT NOT NULL AUTO_INCREMENT,
    username VARCHAR(255) NULL,
    email VARCHAR(255) NULL,
-   permission INT NOT NULL,
    role VARCHAR(255) NOT NULL DEFAULT "USER",
    created_datetime DATE NOT NULL DEFAULT (CURRENT_DATE),
    updated_datetime DATE NOT NULL DEFAULT (CURRENT_DATE),
