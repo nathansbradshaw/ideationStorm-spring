@@ -10,6 +10,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.verify;
@@ -33,7 +34,6 @@ class ProjectServiceTest {
     }
 
     @Test
-    @Disabled
     void canCreateProject() {
         User user = User.builder().username("testname").email("test@example.com").password("password").build();
         ProjectCreateRequest request = ProjectCreateRequest.builder()
@@ -50,12 +50,29 @@ class ProjectServiceTest {
 
         Project capturedProject = projectArgumentCaptor.getValue();
 
+
         //TODO this assertion will fail because it's comparing two different types.
-        assertThat(capturedProject).isEqualTo(request);
+        assertThat(capturedProject.getTitle()).isEqualTo(request.getTitle());
+        assertThat(capturedProject.getContent()).isEqualTo(request.getContent());
+        assertThat(capturedProject.getDescription()).isEqualTo(request.getDescription());
+
     }
 
     @Test
-    @Disabled
     void updateProject() {
+
+        ProjectUpdateRequest updateRequest = ProjectUpdateRequest.builder()
+                .id(1)
+                .title("New title")
+                .content("new content")
+                .description("new description")
+                .difficulty(1).build();
+        underTest.updateProject(updateRequest);
+
+        ArgumentCaptor<Project> projectArgumentCaptor1 = ArgumentCaptor.forClass(Project.class);
+        verify(projectRepository).save(projectArgumentCaptor1.capture());
+        Project updatedProject = projectArgumentCaptor1.getValue();
+
+        assertThat(updatedProject.getDifficulty()).isEqualTo(1);
     }
 }
