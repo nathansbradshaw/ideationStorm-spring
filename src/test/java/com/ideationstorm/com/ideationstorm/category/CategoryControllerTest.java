@@ -7,6 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,7 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
-@WebMvcTest(CategoryController.class)
+@SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 class CategoryControllerTest {
@@ -37,7 +38,7 @@ class CategoryControllerTest {
     public void CategoryController_CreateCategory_ReturnCreatedCategory() throws Exception {
         given(categoryService.createCategory(any())).willAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
 
-        ResultActions response = mockMvc.perform(post("api/v1/categories")
+        ResultActions response = mockMvc.perform(post("/api/v1/categories")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(Category.builder()
                         .name("rust")
