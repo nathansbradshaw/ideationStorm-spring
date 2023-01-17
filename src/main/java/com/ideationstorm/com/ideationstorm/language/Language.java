@@ -24,6 +24,7 @@ public class Language {
     private String name;
 
     @JsonIgnoreProperties({"languages", "projects"})
+
     @ManyToMany(mappedBy = "languages")
     private Set<Project> projects;
 

@@ -30,7 +30,7 @@ public class ProjectController {
         return projectService.getAllProjects();
     }
 
-    @PostMapping("create")
+    @PostMapping()
     public ResponseEntity<Project> createProject(@RequestBody ProjectCreateRequest project,
                                                  @CurrentSecurityContext(expression = "authentication")
                                                  Authentication authentication){
