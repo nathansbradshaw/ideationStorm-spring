@@ -19,15 +19,15 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-//    @GetMapping()
-//    public  @ResponseBody Iterable<Category> getAllCategories() {
-//        return categoryRepository.findAll();
-//    }
+    @GetMapping()
+    public  @ResponseBody Iterable<Category> getAllCategories() {
+        return categoryService.getAllCategories();
+    }
 
-//    @GetMapping("/{id}")
-//    public @ResponseBody Category getCategoryByName(@PathVariable("id") Long id) {
-//        return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
-//    }
+    @GetMapping("/{id}")
+    public @ResponseBody Category getCategoryByName(@PathVariable("id") Long id) {
+        return categoryService.getCategoryById(id);
+    }
 
     @PostMapping("/create")
     public  ResponseEntity<Category> createCategory(@RequestBody CategoryCreateRequest request){
