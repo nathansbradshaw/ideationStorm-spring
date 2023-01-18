@@ -1,6 +1,7 @@
 package com.ideationstorm.com.ideationstorm.category;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ideationstorm.com.ideationstorm.AbstractContainerBaseTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -19,15 +20,17 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
-class CategoryControllerTest {
+class CategoryControllerTest  extends AbstractContainerBaseTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+//    @MockBean
+    @Autowired
     private CategoryService categoryService;
 
 
@@ -36,17 +39,22 @@ class CategoryControllerTest {
 
     @Test
     public void CategoryController_CreateCategory_ReturnCreatedCategory() throws Exception {
-        given(categoryService.createCategory(any())).willAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+//        given(categoryService.createCategory(
+//                any())).willAnswer(
+//                        invocationOnMock -> Category.builder()
+//                                .build());
 
-        ResultActions response = mockMvc.perform(post("/api/v1/categories")
+        ResultActions response = mockMvc.perform(post("/categories")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(Category.builder()
+                .content(objectMapper.writeValueAsString(CategoryCreateRequest.builder()
                         .name("rust")
                         .build())
                 )
         );
 
         response.andExpect(MockMvcResultMatchers.status().isCreated());
+//        response.andExpect()
+
 
     }
 

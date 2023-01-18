@@ -16,7 +16,8 @@ public class CategoryService {
                 .build());
     }
 
-    public Category createCategory(CategoryCreateRequest request) {
+    public Category
+    createCategory(CategoryCreateRequest request) {
         return categoryRepository.save(Category.builder().name(request.getName()).build());
     }
 }

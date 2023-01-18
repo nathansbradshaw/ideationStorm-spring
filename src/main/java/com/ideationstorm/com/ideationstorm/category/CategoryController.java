@@ -35,6 +35,7 @@ public class CategoryController {
             Category category = categoryService.createCategory(request);
             return new ResponseEntity<>(category, HttpStatus.CREATED);
         } catch (Exception e) {
+            System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
