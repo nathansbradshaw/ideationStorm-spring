@@ -39,10 +39,6 @@ class CategoryControllerTest  extends AbstractContainerBaseTest {
 
     @Test
     public void CategoryController_CreateCategory_ReturnCreatedCategory() throws Exception {
-//        given(categoryService.createCategory(
-//                any())).willAnswer(
-//                        invocationOnMock -> Category.builder()
-//                                .build());
 
         ResultActions response = mockMvc.perform(post("/categories")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -53,7 +49,7 @@ class CategoryControllerTest  extends AbstractContainerBaseTest {
         );
 
         response.andExpect(MockMvcResultMatchers.status().isCreated());
-//        response.andExpect()
+//        response.andExpect(MockMvcResultMatchers.jsonPath(""))
 
 
     }
