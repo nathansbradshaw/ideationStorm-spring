@@ -29,7 +29,7 @@ public class CategoryController {
 //        return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
 //    }
 
-    @PostMapping()
+    @PostMapping("/create")
     public  ResponseEntity<Category> createCategory(@RequestBody CategoryCreateRequest request){
         try {
             Category category = categoryService.createCategory(request);
