@@ -41,7 +41,7 @@ public class CategoryController {
 
     }
 
-    @PutMapping()
+    @PutMapping("/update")
     @RolesAllowed("ADMIN")
     public ResponseEntity<Category> updateCategory(@RequestBody CategoryUpdateRequest categoryUpdateRequest){
         return ResponseEntity.ok( categoryService.updateCategory(categoryUpdateRequest));

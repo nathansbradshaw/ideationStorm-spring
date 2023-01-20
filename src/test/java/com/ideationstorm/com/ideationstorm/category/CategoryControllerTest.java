@@ -27,7 +27,6 @@ class CategoryControllerTest  extends AbstractContainerBaseTest {
     @Autowired
     private MockMvc mockMvc;
 
-//    @MockBean
     @Autowired
     private CategoryService categoryService;
 
@@ -35,23 +34,49 @@ class CategoryControllerTest  extends AbstractContainerBaseTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+
+    @Test
+    public void CategoryController_GetAllCa
+
     @Test
     public void CategoryController_CreateCategory_ReturnCreatedCategory() throws Exception {
 
         ResultActions response = mockMvc.perform(post("/categories/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(CategoryCreateRequest.builder()
-                        .name("rust")
+                        .name("backend")
                         .build())
                 )
         );
 
         response.andExpect(MockMvcResultMatchers.status().isCreated());
         response.andExpect(jsonPath("$.name", is("rust")));
-
-
-
     }
+
+    @Test
+    public void CategoryController_UpdateCategory_ReturnUpdatedCategory() throws Exception {
+        ResultActions response = mockMvc.perform(put("/categories/update")
+                .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(CategoryUpdateRequest.builder()
+                                .name("android app")
+                                .id(1)
+                                .build())
+                        )
+        );
+
+        response.andExpect(MockMvcResultMatchers.status().isOk());
+        response.andExpect(jsonPath("$.name", is("android app")));
+        response.andExpect(jsonPath("$.id", is(1)));
+    }
+
+//    @Test
+//    public void CategoryController_DeleteCategory_ReturnVoid() throws Exception{
+//        ResultActions response = mockMvc.perform(delete("/categories/delete")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(objectMapper.writeValueAsString())
+//        );
+//
+//    }
 
 
 }
