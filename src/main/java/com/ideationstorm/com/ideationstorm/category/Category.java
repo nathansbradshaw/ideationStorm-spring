@@ -8,7 +8,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 @Data
@@ -23,6 +26,9 @@ public class Category {
     private long id;
     @Column(unique = true)
     private String name;
+//    @Column(name="created_datetime")
+    @CreationTimestamp
+    private LocalDateTime createdDatetime;
 
     @JsonIgnoreProperties({"projects", "categories" })
     @ManyToMany(mappedBy = "categories")

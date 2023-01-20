@@ -37,11 +37,10 @@ public class Project {
     private String content;
     private int difficulty;
     private int score;
-    @Column(name="created_datetime")
-    @CreationTimestamp
-    private LocalDateTime createdDatetime;
-    @Column(name="updated_datetime")
-    private LocalDateTime updatedDatetime;
+//    @Column(name="created_datetime")
+//    @CreationTimestamp
+//    private LocalDateTime createdDatetime;
+//    private LocalDateTime updatedDatetime;
 
     @JsonIgnoreProperties({"languages", "projects"})
     @ManyToMany

@@ -9,6 +9,7 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     public  Iterable<Category> getAllCategories(){
+
         return categoryRepository.findAll();
     }
 

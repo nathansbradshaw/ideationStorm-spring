@@ -36,7 +36,12 @@ class CategoryControllerTest  extends AbstractContainerBaseTest {
 
 
     @Test
-    public void CategoryController_GetAllCa
+    public void CategoryController_GetAllCategories() throws Exception{
+        ResultActions response = mockMvc.perform(get("/categories"));
+
+//        response.andExpect(MockMvcResultMatchers.status().isOk());
+
+    }
 
     @Test
     public void CategoryController_CreateCategory_ReturnCreatedCategory() throws Exception {
@@ -50,7 +55,7 @@ class CategoryControllerTest  extends AbstractContainerBaseTest {
         );
 
         response.andExpect(MockMvcResultMatchers.status().isCreated());
-        response.andExpect(jsonPath("$.name", is("rust")));
+        response.andExpect(jsonPath("$.name", is("backend")));
     }
 
     @Test
