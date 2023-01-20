@@ -14,6 +14,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -37,10 +38,10 @@ public class Project {
     private String content;
     private int difficulty;
     private int score;
-//    @Column(name="created_datetime")
-//    @CreationTimestamp
-//    private LocalDateTime createdDatetime;
-//    private LocalDateTime updatedDatetime;
+
+    @CreationTimestamp
+    private LocalDateTime createdDatetime;
+    private LocalDateTime updatedDatetime;
 
     @JsonIgnoreProperties({"languages", "projects"})
     @ManyToMany
@@ -51,14 +52,14 @@ public class Project {
     )
     private Set<Language> languages;
 
-    @JsonIgnoreProperties({"projects", "categories" })
-    @ManyToMany
+//    @JsonIgnoreProperties({"projects", "categories" })
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "project_categories",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private Set<Category> categories;
+    private Set<Category> categories = new HashSet<Category>();
 
     public void setId(long id) {
         this.id = id;

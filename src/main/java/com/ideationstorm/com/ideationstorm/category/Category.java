@@ -1,5 +1,6 @@
 package com.ideationstorm.com.ideationstorm.category;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ideationstorm.com.ideationstorm.project.Project;
 import jakarta.persistence.*;
@@ -12,6 +13,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -30,13 +32,10 @@ public class Category {
     @CreationTimestamp
     private LocalDateTime createdDatetime;
 
-    @JsonIgnoreProperties({"projects", "categories" })
-    @ManyToMany(mappedBy = "categories")
-    private Set<Project> projects;
-
-    public Category(String name) {
-        this.name = name;
-    }
+//    @JsonIgnoreProperties({"projects", "categories" })
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JsonIgnore
+    private Set<Project> projects  = new HashSet<Project>();;
 
     public long getId() {
         return id;
@@ -60,5 +59,15 @@ public class Category {
 
     public void setProjects(Set<Project> projects) {
         this.projects = projects;
+    }
+
+    public void addProject(Project project){
+        projects.add(project);
+        project.getCategories().add(this);
+    }
+
+    public void removeProject(Project project){
+        projects.remove(project);
+        project.getCategories().remove(this);
     }
 }
