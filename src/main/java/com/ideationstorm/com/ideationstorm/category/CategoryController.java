@@ -47,6 +47,7 @@ public class CategoryController {
         return ResponseEntity.ok( categoryService.updateCategory(categoryUpdateRequest));
     }
 
+    ///TODO split this into service
 //    @PostMapping("/{id}/delete")
 //    @RolesAllowed("ADMIN")
 //    public ResponseEntity<Category> deleteCategory(@PathVariable("id") Long id){

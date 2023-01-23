@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
@@ -41,8 +42,16 @@ class CategoryControllerTest  extends AbstractContainerBaseTest {
     public void CategoryController_GetAllCategories() throws Exception{
         ResultActions response = mockMvc.perform(get("/categories"));
 
-        response.andExpect(MockMvcResultMatchers.status().isOk());
-
+        response.andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$", hasSize(6)))
+                .andExpect(jsonPath("$[*].name", containsInAnyOrder("REST",
+                        "FULLSTACK",
+                        "RPC",
+                        "FRONTEND",
+                        "APP",
+                        "Game"
+                )));
     }
 
     @Test
@@ -76,12 +85,17 @@ class CategoryControllerTest  extends AbstractContainerBaseTest {
         response.andExpect(jsonPath("$.id", is(1)));
     }
 
+    //TODO uncomment this test when delete is made
 //    @Test
 //    public void CategoryController_DeleteCategory_ReturnVoid() throws Exception{
-//        ResultActions response = mockMvc.perform(delete("/categories/delete")
+//        ResultActions response = mockMvc.perform(delete("/categories/delete/1")
 //                .contentType(MediaType.APPLICATION_JSON)
-//                .content(objectMapper.writeValueAsString())
 //        );
+//
+//        response.andExpect(MockMvcResultMatchers.status().isOk());
+//
+//
+//
 //
 //    }
 
