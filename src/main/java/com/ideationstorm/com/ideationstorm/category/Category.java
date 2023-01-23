@@ -33,9 +33,12 @@ public class Category {
     private LocalDateTime createdDatetime;
 
 //    @JsonIgnoreProperties({"projects", "categories" })
-    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIgnore
-    private Set<Project> projects  = new HashSet<Project>();;
+    @ManyToMany(mappedBy = "categories",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+
+    private Set<Project> projects  = new HashSet<>();;
 
     public long getId() {
         return id;

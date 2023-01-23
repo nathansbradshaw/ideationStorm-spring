@@ -1,5 +1,6 @@
 package com.ideationstorm.com.ideationstorm.project;
 
+import com.ideationstorm.com.ideationstorm.category.CategoryRepository;
 import com.ideationstorm.com.ideationstorm.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,11 +17,15 @@ class ProjectServiceTest {
 
     @Mock
     private ProjectRepository projectRepository;
+
+    @Mock
+    private CategoryRepository categoryRepository;
+
     private ProjectService underTest;
 
     @BeforeEach
     void setUp() {
-        underTest = new ProjectService(projectRepository);
+        underTest = new ProjectService(projectRepository, categoryRepository);
     }
 
     @Test

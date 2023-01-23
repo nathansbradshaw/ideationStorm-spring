@@ -6,10 +6,7 @@ import com.ideationstorm.com.ideationstorm.category.Category;
 import com.ideationstorm.com.ideationstorm.language.Language;
 import com.ideationstorm.com.ideationstorm.user.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -17,9 +14,11 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+
 @Builder
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "projects", schema = "IDEATION_STORM")
@@ -59,7 +58,7 @@ public class Project {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private Set<Category> categories = new HashSet<Category>();
+    private Set<Category> categories = new HashSet<>();
 
     public void setId(long id) {
         this.id = id;

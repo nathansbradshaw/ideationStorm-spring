@@ -48,4 +48,12 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.updateProject(request));
     }
 
+    @PutMapping("{projectId}/category/{categoryId}")
+    public Project assignCategoryToProject(
+            @PathVariable long projectId,
+            @PathVariable long categoryId
+    ) {
+        return projectService.assignCategoryToProject(projectId, categoryId);
+    }
+
 }
