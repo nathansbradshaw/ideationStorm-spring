@@ -18,13 +18,13 @@ INSERT INTO projects (id, title, description, content, difficulty, score, user_i
 INSERT INTO projects (id, title, description, content, difficulty, score, user_id) VALUES (2, 'Test project 2', 'This is a test project', 'Test Content', 3, 0, 2);
 INSERT INTO projects (id, title, description, content, difficulty, score, user_id) VALUES (3, 'Test project 3', 'This is a test project', 'Test Content', 3, 0, 1);
 
-INSERT INTO project_languages (language_id, project_id) VALUES (1, 1);
-INSERT INTO project_languages (language_id, project_id) VALUES (1, 2);
-INSERT INTO project_languages (language_id, project_id) VALUES (2, 1);
-INSERT INTO project_languages (language_id, project_id) VALUES (3, 1);
-INSERT INTO project_languages (language_id, project_id) VALUES (5, 2);
-
-INSERT INTO project_categories (category_id, project_id) VALUES (1, 1);
-INSERT INTO project_categories (category_id, project_id) VALUES (2, 1);
-INSERT INTO project_categories (category_id, project_id) VALUES (3, 1);
+--INSERT INTO project_languages (language_id, project_id) VALUES (1, 1);
+--INSERT INTO project_languages (language_id, project_id) VALUES (1, 2);
+--INSERT INTO project_languages (language_id, project_id) VALUES (2, 1);
+--INSERT INTO project_languages (language_id, project_id) VALUES (3, 1);
+--INSERT INTO project_languages (language_id, project_id) VALUES (5, 2);
+--
+--INSERT INTO project_categories (category_id, project_id) VALUES (1, 1);
+--INSERT INTO project_categories (category_id, project_id) VALUES (2, 1);
+--INSERT INTO project_categories (category_id, project_id) VALUES (3, 1);
 

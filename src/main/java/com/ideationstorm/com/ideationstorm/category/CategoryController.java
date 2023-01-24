@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/categories")
 public class CategoryController {
 
+    @Autowired
     private final CategoryService categoryService;
 
     @Autowired
@@ -41,10 +42,11 @@ public class CategoryController {
 
     }
 
-    @PutMapping("/update")
+    @PutMapping("/update/{id}")
     @RolesAllowed("ADMIN")
-    public ResponseEntity<Category> updateCategory(@RequestBody CategoryUpdateRequest categoryUpdateRequest){
-        return ResponseEntity.ok( categoryService.updateCategory(categoryUpdateRequest));
+    public ResponseEntity<Category> updateCategory(@PathVariable("id") long id, @RequestBody String name){
+        CategoryUpdateRequest request = CategoryUpdateRequest.builder().id(id).name(name).build();
+        return ResponseEntity.ok( categoryService.updateCategory(request));
     }
 
     ///TODO split this into service

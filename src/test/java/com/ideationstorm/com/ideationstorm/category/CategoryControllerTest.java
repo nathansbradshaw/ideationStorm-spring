@@ -2,18 +2,30 @@ package com.ideationstorm.com.ideationstorm.category;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ideationstorm.com.ideationstorm.AbstractContainerBaseTest;
+import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.autoconfigure.flyway.FlywayDataSource;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.*;
@@ -27,15 +39,38 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @ActiveProfiles("test")
 class CategoryControllerTest  extends AbstractContainerBaseTest {
 
+
+
+
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @AfterEach
+    void tearDown() {
+        categoryRepository.deleteAll();
+    }
+
+    @BeforeEach
+    void setup() {
+        categoryRepository.deleteAll();
+
+        Set<Category> categories = new HashSet<>();
+
+        categories.add(Category.builder().name("FRONTEND").id(1).build());
+        categories.add(Category.builder().name("BACKEND").id(2).build());
+        categories.add(Category.builder().name("FULLSTACK").id(3).build());
+
+        categoryRepository.saveAll(categories);
+    }
 
 
     @Test
@@ -44,13 +79,10 @@ class CategoryControllerTest  extends AbstractContainerBaseTest {
 
         response.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$", hasSize(6)))
-                .andExpect(jsonPath("$[*].name", containsInAnyOrder("REST",
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[*].name", containsInAnyOrder("BACKEND",
                         "FULLSTACK",
-                        "RPC",
-                        "FRONTEND",
-                        "APP",
-                        "Game"
+                        "FRONTEND"
                 )));
     }
 
@@ -60,24 +92,20 @@ class CategoryControllerTest  extends AbstractContainerBaseTest {
         ResultActions response = mockMvc.perform(post("/categories/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(CategoryCreateRequest.builder()
-                        .name("backend")
+                        .name("RPC")
                         .build())
                 )
         );
 
         response.andExpect(MockMvcResultMatchers.status().isCreated());
-        response.andExpect(jsonPath("$.name", is("backend")));
+        response.andExpect(jsonPath("$.name", is("RPC")));
     }
 
     @Test
     public void CategoryController_UpdateCategory_ReturnUpdatedCategory() throws Exception {
-        ResultActions response = mockMvc.perform(put("/categories/update")
+        ResultActions response = mockMvc.perform(put("/categories/update/2")
                 .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(CategoryUpdateRequest.builder()
-                                .name("android app")
-                                .id(1)
-                                .build())
-                        )
+                        .content("android app")
         );
 
         response.andExpect(MockMvcResultMatchers.status().isOk());
