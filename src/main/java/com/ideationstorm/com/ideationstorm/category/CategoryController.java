@@ -11,54 +11,56 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
-    CategoryRepository categoryRepository;
 
+    @Autowired
     private final CategoryService categoryService;
 
     @Autowired
-    public CategoryController(CategoryRepository categoryRepository, CategoryService categoryService) {
-        this.categoryRepository = categoryRepository;
+    public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
     @GetMapping()
     public  @ResponseBody Iterable<Category> getAllCategories() {
-        return categoryRepository.findAll();
+        return categoryService.getAllCategories();
     }
 
     @GetMapping("/{id}")
     public @ResponseBody Category getCategoryByName(@PathVariable("id") Long id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
+        return categoryService.getCategoryById(id);
     }
 
     @PostMapping("/create")
-    public  ResponseEntity<Category> createCategory(@RequestBody String name){
+    public  ResponseEntity<Category> createCategory(@RequestBody CategoryCreateRequest request){
         try {
-            Category category = categoryRepository.save(new Category(name));
+            Category category = categoryService.createCategory(request);
             return new ResponseEntity<>(category, HttpStatus.CREATED);
         } catch (Exception e) {
+            System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
 
-    @PutMapping("/update")
+    @PutMapping("/update/{id}")
     @RolesAllowed("ADMIN")
-    public ResponseEntity<Category> updateCategory(@RequestBody CategoryUpdateRequest categoryUpdateRequest){
-        return ResponseEntity.ok( categoryService.updateCategory(categoryUpdateRequest));
+    public ResponseEntity<Category> updateCategory(@PathVariable("id") long id, @RequestBody String name){
+        CategoryUpdateRequest request = CategoryUpdateRequest.builder().id(id).name(name).build();
+        return ResponseEntity.ok( categoryService.updateCategory(request));
     }
 
-    @PostMapping("/{id}/delete")
-    @RolesAllowed("ADMIN")
-    public ResponseEntity<Category> deleteCategory(@PathVariable("id") Long id){
-        try {
-            Category categoryToDelete = categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
-            categoryRepository.delete(categoryToDelete);
-            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    ///TODO split this into service
+//    @PostMapping("/{id}/delete")
+//    @RolesAllowed("ADMIN")
+//    public ResponseEntity<Category> deleteCategory(@PathVariable("id") Long id){
+//        try {
+//            Category categoryToDelete = categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
+//            categoryRepository.delete(categoryToDelete);
+//            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
 
 }

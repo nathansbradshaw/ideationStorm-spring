@@ -30,7 +30,7 @@ public class ProjectController {
         return projectService.getAllProjects();
     }
 
-    @PostMapping("create")
+    @PostMapping()
     public ResponseEntity<Project> createProject(@RequestBody ProjectCreateRequest project,
                                                  @CurrentSecurityContext(expression = "authentication")
                                                  Authentication authentication){
@@ -46,6 +46,14 @@ public class ProjectController {
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
         return ResponseEntity.ok(projectService.updateProject(request));
+    }
+
+    @PutMapping("{projectId}/category/{categoryId}")
+    public Project assignCategoryToProject(
+            @PathVariable long projectId,
+            @PathVariable long categoryId
+    ) {
+        return projectService.assignCategoryToProject(projectId, categoryId);
     }
 
 }

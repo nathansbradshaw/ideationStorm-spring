@@ -1,22 +1,30 @@
 package com.ideationstorm.com.ideationstorm.project;
 
+import com.ideationstorm.com.ideationstorm.category.Category;
+import com.ideationstorm.com.ideationstorm.category.CategoryRepository;
 import com.ideationstorm.com.ideationstorm.user.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
 
+    @Autowired
     private final ProjectRepository projectRepository;
 
-    public List<Project> getAllProjects(){
+    @Autowired
+    private final CategoryRepository categoryRepository;
+
+    public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
 
-    public Project createProject(ProjectCreateRequest request, User user){
+    public Project createProject(ProjectCreateRequest request, User user) {
         Project project = Project.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
@@ -30,7 +38,7 @@ public class ProjectService {
         return project;
     }
 
-    public Project updateProject(ProjectUpdateRequest request){
+    public Project updateProject(ProjectUpdateRequest request) {
         return projectRepository.save(Project.builder()
                 .title(request.getTitle())
                 .id(request.getId())
@@ -40,5 +48,19 @@ public class ProjectService {
                 .languages(request.getLanguages())
                 .build());
     }
+
+    public Project assignCategoryToProject(long projectId, long categoryId) {
+        Set<Category> categorySet = null;
+        Project project = projectRepository.findById(projectId).get();
+        Category category = categoryRepository.findById(categoryId).get();
+
+        categorySet = project.getCategories();
+        categorySet.add(category);
+
+        project.setCategories(categorySet);
+        return projectRepository.save(project);
+
+    }
+
 
 }
