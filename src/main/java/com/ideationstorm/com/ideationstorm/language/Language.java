@@ -28,26 +28,6 @@ public class Language {
     @ManyToMany(mappedBy = "languages")
     private Set<Project> projects;
 
-    public Language(String name) {
-        this.name = name;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Set<Project> getProjects() {
         return projects;
     }
@@ -55,4 +35,6 @@ public class Language {
     public void setProjects(Set<Project> projects) {
         this.projects = projects;
     }
+
+
 }
