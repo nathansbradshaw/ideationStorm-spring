@@ -103,14 +103,15 @@ class CategoryControllerTest  extends AbstractContainerBaseTest {
 
     @Test
     public void CategoryController_UpdateCategory_ReturnUpdatedCategory() throws Exception {
-        ResultActions response = mockMvc.perform(put("/categories/update/2")
+        Category item = categoryRepository.findByName("FULLSTACK");
+        ResultActions response = mockMvc.perform(put("/categories/update/{id}", item.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                         .content("android app")
         );
 
         response.andExpect(MockMvcResultMatchers.status().isOk());
         response.andExpect(jsonPath("$.name", is("android app")));
-        response.andExpect(jsonPath("$.id", is(1)));
+        response.andExpect(jsonPath("$.id", is((int) item.getId())));
     }
 
     //TODO uncomment this test when delete is made
