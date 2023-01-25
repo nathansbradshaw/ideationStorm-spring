@@ -27,7 +27,7 @@ public class Language {
 
     @ManyToMany(mappedBy = "languages",
             fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+            cascade = { CascadeType.MERGE, CascadeType.REMOVE})
     private Set<Project> projects;
 
     public Set<Project> getProjects() {

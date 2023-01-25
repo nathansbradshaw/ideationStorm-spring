@@ -36,7 +36,7 @@ public class Category {
 //    @JsonIgnore
     @ManyToMany(mappedBy = "categories",
             fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+            cascade = { CascadeType.MERGE, CascadeType.REMOVE})
 
     private Set<Project> projects  = new HashSet<>();;
 
