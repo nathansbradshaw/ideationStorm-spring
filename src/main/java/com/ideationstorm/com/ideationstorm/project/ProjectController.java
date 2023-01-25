@@ -26,8 +26,8 @@ public class ProjectController {
     }
 
     @GetMapping()
-    public @ResponseBody List<Project> getAllProjects(){
-        return projectService.getAllProjects();
+    public ResponseEntity<List<Project>> getAllProjects(){
+        return new ResponseEntity<>(projectService.getAllProjects(), HttpStatus.OK);
     }
 
 
@@ -55,6 +55,14 @@ public class ProjectController {
             @PathVariable long categoryId
     ) {
         return projectService.assignCategoryToProject(projectId, categoryId);
+    }
+
+    @PutMapping("{projectId}/category/{languageId}")
+    public Project assignLanguageToProject(
+            @PathVariable long projectId,
+            @PathVariable long languageId
+    ) {
+        return projectService.assignLanguageToProject(projectId, languageId);
     }
 
 }

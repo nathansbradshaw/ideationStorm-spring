@@ -1,6 +1,8 @@
 package com.ideationstorm.com.ideationstorm.project;
 
 import com.ideationstorm.com.ideationstorm.category.CategoryRepository;
+import com.ideationstorm.com.ideationstorm.language.Language;
+import com.ideationstorm.com.ideationstorm.language.LanguageRepository;
 import com.ideationstorm.com.ideationstorm.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,11 +23,14 @@ class ProjectServiceTest {
     @Mock
     private CategoryRepository categoryRepository;
 
+    @Mock
+    private LanguageRepository languageRepository;
+
     private ProjectService underTest;
 
     @BeforeEach
     void setUp() {
-        underTest = new ProjectService(projectRepository, categoryRepository);
+        underTest = new ProjectService(projectRepository, categoryRepository, languageRepository);
     }
 
     @Test

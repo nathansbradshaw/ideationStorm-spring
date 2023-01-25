@@ -21,13 +21,18 @@ public class CategoryController {
     }
 
     @GetMapping()
-    public  @ResponseBody Iterable<Category> getAllCategories() {
-        return categoryService.getAllCategories();
+    public  ResponseEntity<Iterable<Category>> getAllCategories() {
+        return new ResponseEntity<>(categoryService.getAllCategories(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public @ResponseBody Category getCategoryByName(@PathVariable("id") Long id) {
-        return categoryService.getCategoryById(id);
+    public ResponseEntity<Category> getCategoryById(@PathVariable("id") Long id) {
+        return new ResponseEntity<>( categoryService.getCategoryById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/{name}")
+    public ResponseEntity<Category> getCategoryByName(@PathVariable("name") String name) {
+        return new ResponseEntity<>(categoryService.getCategoryByName(name), HttpStatus.OK);
     }
 
     @PostMapping("/create")

@@ -2,6 +2,8 @@ package com.ideationstorm.com.ideationstorm.project;
 
 import com.ideationstorm.com.ideationstorm.category.Category;
 import com.ideationstorm.com.ideationstorm.category.CategoryRepository;
+import com.ideationstorm.com.ideationstorm.language.Language;
+import com.ideationstorm.com.ideationstorm.language.LanguageRepository;
 import com.ideationstorm.com.ideationstorm.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ public class ProjectService {
 
     @Autowired
     private final CategoryRepository categoryRepository;
+    private final LanguageRepository languageRepository;
 
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
@@ -62,5 +65,16 @@ public class ProjectService {
 
     }
 
+    public Project assignLanguageToProject(long projectId, long languageId) {
+        Set<Language> languageSet = null;
+        Project project =  projectRepository.findById(projectId).get();
+        Language language = languageRepository.findById(languageId).get();
 
+        languageSet = project.getLanguages();
+        languageSet.add(language);
+
+        project.setLanguages(languageSet);
+        return projectRepository.save(project);
+
+    }
 }

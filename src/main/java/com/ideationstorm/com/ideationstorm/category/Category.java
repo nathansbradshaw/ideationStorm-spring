@@ -32,8 +32,8 @@ public class Category {
     @CreationTimestamp
     private LocalDateTime createdDatetime;
 
-//    @JsonIgnoreProperties({"projects", "categories" })
-    @JsonIgnore
+    @JsonIgnoreProperties({"projects", "categories" })
+//    @JsonIgnore
     @ManyToMany(mappedBy = "categories",
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})

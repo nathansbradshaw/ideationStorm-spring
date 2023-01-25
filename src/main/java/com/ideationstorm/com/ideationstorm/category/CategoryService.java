@@ -34,4 +34,8 @@ public class CategoryService {
     createCategory(CategoryCreateRequest request) {
         return categoryRepository.save(Category.builder().name(request.getName()).build());
     }
+
+    public Category getCategoryByName(String name) {
+        return categoryRepository.findByName(name);
+    }
 }
