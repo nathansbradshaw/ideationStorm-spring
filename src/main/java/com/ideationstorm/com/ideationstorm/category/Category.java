@@ -32,29 +32,13 @@ public class Category {
     @CreationTimestamp
     private LocalDateTime createdDatetime;
 
-//    @JsonIgnoreProperties({"projects", "categories" })
-    @JsonIgnore
+    @JsonIgnoreProperties({"projects", "categories" })
+//    @JsonIgnore
     @ManyToMany(mappedBy = "categories",
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 
     private Set<Project> projects  = new HashSet<>();;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public Set<Project> getProjects() {
         return projects;

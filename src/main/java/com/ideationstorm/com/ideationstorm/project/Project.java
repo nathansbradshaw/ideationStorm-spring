@@ -51,7 +51,7 @@ public class Project {
     )
     private Set<Language> languages;
 
-//    @JsonIgnoreProperties({"projects", "categories" })
+    @JsonIgnoreProperties({"projects", "categories" })
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinTable(
             name = "project_categories",
@@ -63,5 +63,10 @@ public class Project {
     public void removeCategory(Category category) {
         categories.remove(category);
         category.getProjects().remove(this);
+    }
+
+    public void removeLanguage(Language language) {
+        languages.remove(language);
+        language.getProjects().remove(this);
     }
 }

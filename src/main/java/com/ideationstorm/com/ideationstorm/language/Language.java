@@ -25,28 +25,10 @@ public class Language {
 
     @JsonIgnoreProperties({"languages", "projects"})
 
-    @ManyToMany(mappedBy = "languages")
+    @ManyToMany(mappedBy = "languages",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private Set<Project> projects;
-
-    public Language(String name) {
-        this.name = name;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public Set<Project> getProjects() {
         return projects;
@@ -55,4 +37,16 @@ public class Language {
     public void setProjects(Set<Project> projects) {
         this.projects = projects;
     }
+
+    public void addProject(Project project){
+        projects.add(project);
+        project.getLanguages().add(this);
+    }
+
+    public void removeProject(Project project){
+        projects.remove(project);
+        project.getLanguages().remove(this);
+    }
+
+
 }

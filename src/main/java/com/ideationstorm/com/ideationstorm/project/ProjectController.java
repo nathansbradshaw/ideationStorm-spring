@@ -26,11 +26,12 @@ public class ProjectController {
     }
 
     @GetMapping()
-    public @ResponseBody List<Project> getAllProjects(){
-        return projectService.getAllProjects();
+    public ResponseEntity<List<Project>> getAllProjects(){
+        return new ResponseEntity<>(projectService.getAllProjects(), HttpStatus.OK);
     }
 
-    @PostMapping()
+
+    @PostMapping("/create")
     public ResponseEntity<Project> createProject(@RequestBody ProjectCreateRequest project,
                                                  @CurrentSecurityContext(expression = "authentication")
                                                  Authentication authentication){
@@ -38,8 +39,8 @@ public class ProjectController {
         return ResponseEntity.ok((projectService.createProject(project, user)));
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Project> updateProject(@RequestBody ProjectUpdateRequest request, @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Project> updateProject(@PathVariable long id, @RequestBody ProjectUpdateRequest request, @CurrentSecurityContext(expression = "authentication") Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         Optional<Project> project = projectRepository.findById(request.getId());
         if(project.get().getUser() != user){
@@ -54,6 +55,14 @@ public class ProjectController {
             @PathVariable long categoryId
     ) {
         return projectService.assignCategoryToProject(projectId, categoryId);
+    }
+
+    @PutMapping("{projectId}/category/{languageId}")
+    public Project assignLanguageToProject(
+            @PathVariable long projectId,
+            @PathVariable long languageId
+    ) {
+        return projectService.assignLanguageToProject(projectId, languageId);
     }
 
 }
