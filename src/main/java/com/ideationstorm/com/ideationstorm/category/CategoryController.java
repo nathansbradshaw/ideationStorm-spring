@@ -30,8 +30,8 @@ public class CategoryController {
         return new ResponseEntity<>( categoryService.getCategoryById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<Category> getCategoryByName(@PathVariable("name") String name) {
+    @GetMapping("/")
+    public ResponseEntity<Category> getCategoryByName(@RequestParam(value="name") String name) {
         return new ResponseEntity<>(categoryService.getCategoryByName(name), HttpStatus.OK);
     }
 

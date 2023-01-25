@@ -1,11 +1,14 @@
 package com.ideationstorm.com.ideationstorm.project;
 
 import com.ideationstorm.com.ideationstorm.user.User;
+import com.ideationstorm.com.ideationstorm.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -17,12 +20,15 @@ import java.util.Optional;
 public class ProjectController {
     private final ProjectService projectService;
     private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public ProjectController(ProjectService projectService,
-                             ProjectRepository projectRepository) {
+                             ProjectRepository projectRepository,
+                             UserRepository userRepository) {
         this.projectService = projectService;
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping()
@@ -34,9 +40,13 @@ public class ProjectController {
     @PostMapping("/create")
     public ResponseEntity<Project> createProject(@RequestBody ProjectCreateRequest project,
                                                  @CurrentSecurityContext(expression = "authentication")
-                                                 Authentication authentication){
-        User user = (User) authentication.getPrincipal();
-        return ResponseEntity.ok((projectService.createProject(project, user)));
+                                                 Authentication authentication,
+                                                 @AuthenticationPrincipal UserDetails userDetails
+    ){
+        //TODO while this works, it is not ideal and need to be looked at.
+        User user = userRepository.findByEmail(userDetails.getUsername()).get();
+//        User user = authentication.getPrincipal();
+        return new ResponseEntity<>(projectService.createProject(project, user), HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
@@ -57,7 +67,7 @@ public class ProjectController {
         return projectService.assignCategoryToProject(projectId, categoryId);
     }
 
-    @PutMapping("{projectId}/category/{languageId}")
+    @PutMapping("{projectId}/language/{languageId}")
     public Project assignLanguageToProject(
             @PathVariable long projectId,
             @PathVariable long languageId

@@ -52,7 +52,7 @@ public class Project {
     private Set<Language> languages;
 
     @JsonIgnoreProperties({"projects", "categories" })
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.REMOVE})
     @JoinTable(
             name = "project_categories",
             joinColumns = @JoinColumn(name = "project_id"),

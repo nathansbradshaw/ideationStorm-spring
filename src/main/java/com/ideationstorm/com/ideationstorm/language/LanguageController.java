@@ -30,8 +30,8 @@ public class LanguageController {
         return new ResponseEntity<>(languageService.getLanguageById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<Language> getLanguageByName(@PathVariable("name") String name){
+    @GetMapping("/")
+    public ResponseEntity<Language> getLanguageByName(@RequestParam(value="name") String name){
         return new ResponseEntity<>(languageService.getLanguageByName(name), HttpStatus.OK);
     }
 

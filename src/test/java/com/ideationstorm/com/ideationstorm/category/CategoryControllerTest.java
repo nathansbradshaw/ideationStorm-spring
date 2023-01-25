@@ -32,12 +32,11 @@ import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
-class CategoryControllerTest  extends AbstractContainerBaseTest {
+class CategoryControllerTest extends AbstractContainerBaseTest {
 
 
 
@@ -87,6 +86,24 @@ class CategoryControllerTest  extends AbstractContainerBaseTest {
     }
 
     @Test
+    public void CategoryController_GetCategoryById() throws  Exception {
+        Category item = categoryRepository.findByName("FULLSTACK");
+
+        ResultActions response = mockMvc.perform(get("/categories/{id}", item.getId()));
+        response.andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$.name", is("FULLSTACK")))
+                .andExpect(jsonPath("$.id", is((int) item.getId())));
+    }
+
+    @Test
+    public void CategoryController_GetCategoryByName() throws  Exception {
+
+        ResultActions response = mockMvc.perform(get("/categories/?name={name}", "FullSTACK"));
+        response.andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(jsonPath("$.name", is("FULLSTACK")));
+    }
+
+    @Test
     public void CategoryController_CreateCategory_ReturnCreatedCategory() throws Exception {
 
         ResultActions response = mockMvc.perform(post("/categories/create")
@@ -100,6 +117,7 @@ class CategoryControllerTest  extends AbstractContainerBaseTest {
         response.andExpect(MockMvcResultMatchers.status().isCreated());
         response.andExpect(jsonPath("$.name", is("RPC")));
     }
+
 
     @Test
     public void CategoryController_UpdateCategory_ReturnUpdatedCategory() throws Exception {
