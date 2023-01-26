@@ -41,10 +41,11 @@ public class ProjectController {
     public ResponseEntity<Project> createProject(@RequestBody ProjectCreateRequest project,
                                                  @CurrentSecurityContext(expression = "authentication")
                                                  Authentication authentication,
-                                                 @AuthenticationPrincipal UserDetails userDetails
+                                                 @AuthenticationPrincipal User user
     ){
         //TODO while this works, it is not ideal and need to be looked at.
-        User user = userRepository.findByEmail(userDetails.getUsername()).get();
+        authentication.isAuthenticated();
+//        User user = userRepository.findByEmail(userDetails.getUsername()).get();
 //        User user = authentication.getPrincipal();
         return new ResponseEntity<>(projectService.createProject(project, user), HttpStatus.CREATED);
     }
