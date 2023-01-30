@@ -20,7 +20,7 @@ import java.util.Optional;
 public class ProjectController {
     private final ProjectService projectService;
     private final ProjectRepository projectRepository;
-    private final UserRepository userRepository;
+
 
     @Autowired
     public ProjectController(ProjectService projectService,
@@ -28,7 +28,6 @@ public class ProjectController {
                              UserRepository userRepository) {
         this.projectService = projectService;
         this.projectRepository = projectRepository;
-        this.userRepository = userRepository;
     }
 
     @GetMapping()
@@ -39,15 +38,9 @@ public class ProjectController {
 
     @PostMapping("/create")
     public ResponseEntity<Project> createProject(@RequestBody ProjectCreateRequest project,
-                                                 @CurrentSecurityContext(expression = "authentication")
-                                                 Authentication authentication,
-                                                 @AuthenticationPrincipal User user
+                                                 @AuthenticationPrincipal UserDetails userDetails
     ){
-        //TODO while this works, it is not ideal and need to be looked at.
-        authentication.isAuthenticated();
-//        User user = userRepository.findByEmail(userDetails.getUsername()).get();
-//        User user = authentication.getPrincipal();
-        return new ResponseEntity<>(projectService.createProject(project, user), HttpStatus.CREATED);
+        return new ResponseEntity<>(projectService.createProject(project, userDetails), HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
