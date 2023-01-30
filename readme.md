@@ -84,8 +84,8 @@ Tests can be ran by using the maven command
 ```shell
 mvn test
 ```
-
 Or by using an IDE and right-clicking the `java` folder that is nested under the `test` folder and selecting `run all tests`
+
 ---
 ## building
 Run the following command
@@ -94,9 +94,8 @@ Run the following command
 mvn package
 ```
 The jar will be placed in the target folder.
+If you want a `war` folder, you can add the following line to the `pom.xml` file: `<packaging>war</packaging>`
 
-
-If you want a `war` folder, you can add the following line to the `pom.xml` file: ` <packaging>war</packaging>`
 ---
 ## Trouble Shooting
 ### **Error:** port 8080 in use
