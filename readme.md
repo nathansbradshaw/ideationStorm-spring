@@ -28,19 +28,6 @@ or run them at together (windows) using the following script
  cd src/main/docker | docker compose up
 ```
 
-<!-- &nbsp;
-
-&nbsp; -->
-
-<!-- Second, install all the maven dependencies with the following command, this will also build and package the project.
-(Run this in the root directory)
-
-```shell
-mvn package
-```
-
-Note: You may see a few new docker containers in your Docker Desktop, these should automatically remove themselves within a few minutes after finishing the build. -->
-
 &nbsp;
 
 &nbsp;
@@ -51,6 +38,9 @@ This command will install the Maven depenancy and start the server.
 ```shell
 mvn spring-boot:run
 ```
+
+If you get to this point and the Docker conatainer is running, but the app won't connect to the database, try removing the following line from the `application.properties` file.
+comment out `spring.datasource.password=password`
 
 &nbsp;
 

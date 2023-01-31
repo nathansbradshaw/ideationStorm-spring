@@ -1,14 +1,15 @@
-version: '3.1'
+version: "3.1"
 
 services:
   db:
     image: mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 'password'
       COMPOSE_PROJECT_NAME: ideation_storm
+      MYSQL_ROOT_PASSWORD: password
     ports:
-      - "3306:3306"
+      - 3306:3306
+    command: --default-authentication-plugin=mysql_native_password
     volumes:
       - ./data.sql:/docker-entrypoint-initdb.d/data.sql
     container_name: ideation_storm_db
