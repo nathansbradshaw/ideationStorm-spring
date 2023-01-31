@@ -28,24 +28,25 @@ or run them at together (windows) using the following script
  cd src/main/docker | docker compose up
 ```
 
-&nbsp;
+<!-- &nbsp;
 
-&nbsp;
+&nbsp; -->
 
-Second, install all the maven dependencies with the following command, this will also build and package the project.
+<!-- Second, install all the maven dependencies with the following command, this will also build and package the project.
 (Run this in the root directory)
 
 ```shell
 mvn package
 ```
 
-Note: You may see a few new docker containers in your Docker Desktop, these should automatically remove themselves within a few minutes after finishing the build.
+Note: You may see a few new docker containers in your Docker Desktop, these should automatically remove themselves within a few minutes after finishing the build. -->
 
 &nbsp;
 
 &nbsp;
 
-Finally, Run the application. There are two ways to run the app the first way is through the maven command
+Once the docker container is running you can start the application by running the following command in the root directory.
+This command will install the Maven depenancy and start the server.
 
 ```shell
 mvn spring-boot:run
@@ -129,6 +130,10 @@ If you want a `war` folder, you can add the following line to the `pom.xml` file
 ---
 
 ## Trouble Shooting
+
+### **Error:** `no plugin found for prefix 'spring-boot' in current project an in the plugin group....`
+
+There are two possible causes for this error, you either miss spelt `mvn spring-boot:run` or you are not running the command in the directory that contains the `pom.xml`
 
 ### **Error:** `mvn command not recognized`
 
