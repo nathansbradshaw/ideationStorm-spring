@@ -28,6 +28,10 @@ or run them at together (windows) using the following script
  cd src/main/docker | docker compose up
 ```
 
+&nbsp;
+
+&nbsp;
+
 Second, install all the maven dependencies with the following command, this will also build and package the project.
 (Run this in the root directory)
 
@@ -35,11 +39,21 @@ Second, install all the maven dependencies with the following command, this will
 mvn package
 ```
 
+Note: You may see a few new docker containers in your Docker Desktop, these should automatically remove themselves within a few minutes after finishing the build.
+
+&nbsp;
+
+&nbsp;
+
 Finally, Run the application. There are two ways to run the app the first way is through the maven command
 
 ```shell
 mvn spring-boot:run
 ```
+
+&nbsp;
+
+&nbsp;
 
 The second way requires an IDE like intelij to run and would be ran by hitting the play button/ execute the `main` method in the `com.ideationstorm.com.ideationstorm.ideationstormApplication` class from your IDE.  
 Start the Docker Container by running `docker compose up` in the `ideationStorm-spring/src/main/docker` folder
@@ -142,7 +156,7 @@ Or you can change what port the program runs on, this can be changed in the appl
 Did docker start up correctly?  
 Is port 3306 currently in use by another program?  
 **Possible solutions:**  
-Kill whatever is running on port 3306. I like to use the below command.
+Kill whatever is running on port 3306. Note: you should identify what program is using the port before running the following command.
 
 ```shell
 npx kill-port 3306
@@ -153,6 +167,8 @@ Rerun docker compose in the `ideationStorm-spring/src/main/docker` folder
 ```shell
 docker compose up
 ```
+
+Alternatively you can change the port that docker uses, by updating the `docker-compose` and the `application.properties` files.
 
 ---
 
