@@ -5,8 +5,10 @@ import com.ideationstorm.com.ideationstorm.category.CategoryRepository;
 import com.ideationstorm.com.ideationstorm.language.Language;
 import com.ideationstorm.com.ideationstorm.language.LanguageRepository;
 import com.ideationstorm.com.ideationstorm.user.User;
+import com.ideationstorm.com.ideationstorm.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,11 +25,14 @@ public class ProjectService {
     private final CategoryRepository categoryRepository;
     private final LanguageRepository languageRepository;
 
+    private final UserRepository userRepository;
+
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
 
-    public Project createProject(ProjectCreateRequest request, User user) {
+    public Project createProject(ProjectCreateRequest request, UserDetails userDetails) {
+        User user = userRepository.findByEmail(userDetails.getUsername()).get();
         Project project = Project.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
@@ -41,7 +46,7 @@ public class ProjectService {
         return project;
     }
 
-    public Project updateProject(ProjectUpdateRequest request) {
+    public Project updateProject(ProjectUpdateRequest request, UserDetails userDetails) {
         return projectRepository.save(Project.builder()
                 .title(request.getTitle())
                 .id(request.getId())

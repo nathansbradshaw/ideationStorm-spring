@@ -11,22 +11,23 @@ import java.util.List;
 
 @RestController
 public class UserController {
-    UserRepository userRepository;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/users")
     public @ResponseBody List<User> getAllUsers(){
-        return userRepository.findAll();
+        return userService.getAllUsers();
     }
-    @GetMapping("/users/user/{id}")
-    public String getUserByUsername(@RequestParam String username, @RequestParam(required = false) int id) {
-        System.out.println(id);
-        User user = userRepository.findByUsername(username);
-
-        return  user.toString();
-    }
+//    @GetMapping("/users/{username}")
+//    public String getUserByUsername(@RequestParam String username, @RequestParam(required = false) String ) {
+//        System.out.println(id);
+//        User user = userService.loadUserByUsername(username);
+//        return  user.toString();
+//    }
 }
