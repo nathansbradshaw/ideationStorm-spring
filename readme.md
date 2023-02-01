@@ -12,22 +12,13 @@ For building and running the application you need:
 
 From the root directory, run the following commands
 
-first, start up docker
+first, start up docker (If you are not on linux, make sure the Docker Desktop is running)
 
 ```shell
- cd src/main/docker
+docker compose up -d
 ```
-
-```shell
-docker compose up
-```
-
-or run them at together (windows) using the following script
-
-```shell
- cd src/main/docker | docker compose up
-```
-
+This will start up a container with mysql, Make sure port 3306 is open, it's possible that docker will run with something else running on port 3306, but the app will not run, so be sure to close anything running on port 3306.
+If you have MySql installed and would like to use that instead, you can, although Docker is still required for the tests.
 &nbsp;
 
 &nbsp;
@@ -60,7 +51,6 @@ ideationStorm-spring
 ├───postman
 ├───src
 │   ├───main
-│   │   ├───docker
 │   │   ├───java
 │   │   │   └───com.ideationstorm.com.ideationstorm
 │   │   │                   ├───auth
