@@ -46,7 +46,7 @@ public class ProjectService {
         return project;
     }
 
-    public Project updateProject(ProjectUpdateRequest request) {
+    public Project updateProject(ProjectUpdateRequest request, UserDetails userDetails) {
         return projectRepository.save(Project.builder()
                 .title(request.getTitle())
                 .id(request.getId())

@@ -12,8 +12,11 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ProjectServiceTest {
@@ -46,6 +49,9 @@ class ProjectServiceTest {
     @Test
     void canCreateProject() {
         User user = User.builder().username("testname").email("test@example.com").password("password").build();
+
+        when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.ofNullable(user));
+
         ProjectCreateRequest request = ProjectCreateRequest.builder()
                 .title("Title")
                 .content("content")
@@ -70,6 +76,8 @@ class ProjectServiceTest {
 
     @Test
     void updateProject() {
+        User user = User.builder().username("testname").email("test@example.com").password("password").build();
+
 
         ProjectUpdateRequest updateRequest = ProjectUpdateRequest.builder()
                 .id(1)
@@ -77,7 +85,7 @@ class ProjectServiceTest {
                 .content("new content")
                 .description("new description")
                 .difficulty(1).build();
-        underTest.updateProject(updateRequest);
+        underTest.updateProject(updateRequest, user);
 
         ArgumentCaptor<Project> projectArgumentCaptor = ArgumentCaptor.forClass(Project.class);
         verify(projectRepository).save(projectArgumentCaptor.capture());
