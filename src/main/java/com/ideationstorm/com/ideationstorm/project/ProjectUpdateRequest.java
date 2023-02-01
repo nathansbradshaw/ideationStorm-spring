@@ -22,5 +22,4 @@ public class ProjectUpdateRequest {
     private int difficulty;
     private Set<Language> languages;
     private Set<Category> categories;
-    private User user;
 }

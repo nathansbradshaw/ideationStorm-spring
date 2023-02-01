@@ -47,6 +47,7 @@ public class ProjectService {
     }
 
     public Project updateProject(ProjectUpdateRequest request, UserDetails userDetails) {
+        User user = userRepository.findByEmail(userDetails.getUsername()).get();
         return projectRepository.save(Project.builder()
                 .title(request.getTitle())
                 .id(request.getId())
@@ -54,6 +55,7 @@ public class ProjectService {
                 .content(request.getContent())
                 .difficulty(request.getDifficulty())
                 .languages(request.getLanguages())
+                .user(user)
                 .build());
     }
 

@@ -40,7 +40,7 @@ public class LanguageController {
             return new ResponseEntity<>(languageService.createLanguage(request), HttpStatus.CREATED);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/update/id")
     @RolesAllowed("ADMIN")
     public  ResponseEntity<Language> updateLanguage(@RequestBody LanguageUpdateRequest languageUpdateRequest) {
         return ResponseEntity.ok(languageService.updateLanguage(languageUpdateRequest));
