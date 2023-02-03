@@ -20,9 +20,12 @@ public class UserService  implements UserDetailsService {
     @Autowired
     private final UserRepository userRepository;
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(username).orElseThrow();
+        System.out.println("Getting authorities");
+
+        System.out.println(user.getAuthorities().toString());
+        return user;
     }
 
     public List<User> getAllUsers() {

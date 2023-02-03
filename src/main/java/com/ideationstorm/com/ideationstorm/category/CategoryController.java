@@ -5,6 +5,7 @@ import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,8 +48,9 @@ public class CategoryController {
 
     }
 
+//    @PreAuthorize("hasAnyRole('ADMIN', 'USER', 'ROLE_USER')")
     @PutMapping("/update/{id}")
-    @RolesAllowed("ADMIN")
+    @Secured({"ROLE_USER", "USER", "ADMIN"})
     public ResponseEntity<Category> updateCategory(@PathVariable("id") long id, @RequestBody String name){
         CategoryUpdateRequest request = CategoryUpdateRequest.builder().id(id).name(name).build();
         return ResponseEntity.ok( categoryService.updateCategory(request));
