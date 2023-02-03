@@ -22,6 +22,7 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
+
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
@@ -32,6 +33,7 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> extractClaims, UserDetails userDetails) {
+        extractClaims.put("roles", userDetails.getAuthorities().toString());
         return Jwts.builder()
                 .setClaims(extractClaims)
                 .setSubject(userDetails
@@ -39,6 +41,7 @@ public class JwtService {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24 * 7))
                 .signWith(getSignInkey(), SignatureAlgorithm.HS256)
+
                 .compact();
     }
 

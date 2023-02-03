@@ -41,7 +41,7 @@ public class LanguageController {
     }
 
     @PutMapping("/update/id")
-    @RolesAllowed("ADMIN")
+
     public  ResponseEntity<Language> updateLanguage(@RequestBody LanguageUpdateRequest languageUpdateRequest) {
         return ResponseEntity.ok(languageService.updateLanguage(languageUpdateRequest));
     }
